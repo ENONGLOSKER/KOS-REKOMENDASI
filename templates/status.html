@@ -1,0 +1,435 @@
+<html>
+
+<head>
+    <title>
+        Status | KosMu
+    </title>
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background-color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            background-image: url('bg.png');
+            background-size: cover;
+            background-position: center;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        /* navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 8%;
+            position: relative;
+        }
+
+        ul {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        ul li {
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+
+        ul li a {
+            text-decoration: none;
+            color: #000000;
+            font-size: 14px;
+        }
+
+        ul li a:hover {
+            color: #9C6700;
+        }
+
+        #btn-signin {
+            background-color: #9C6700;
+            color: #ffffff;
+            padding: 10px 25px;
+            border-radius: 50px;
+        }
+
+        #btn-signin:hover {
+            background-color: #734d02;
+            box-shadow: 5px 5px 40px #ffda91;
+        }
+
+        /* keterangan */
+        .home {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .home span {
+            background-color: #F3E1C0;
+            color: #9C6700;
+            padding: 5px 25px;
+            border-radius: 50px;
+            margin-bottom: -40px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .home h1 {
+            font-size: 55px;
+            font-weight: 500;
+            margin-bottom: -15px;
+        }
+
+        .home p {
+            width: 44%;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .home a {
+            background-color: #9C6700;
+            color: #ffffff;
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            margin-top: 15px;
+        }
+
+        .home a:hover {
+            background-color: #734d02;
+            box-shadow: 5px 5px 40px #ffda91;
+        }
+
+        /* content */
+        .content {
+            background-color: #ffffff;
+            width: 90%;
+            height: 140%;
+            position: relative;
+            margin-top: -40px;
+            padding: 20px 80px;
+            border-radius: 42px 42px 0 0 ;
+            transform: translateX(-4px);margin-bottom: 100px;
+        }
+
+        .content h2 {
+            text-align: center;
+            font-size: 40px;
+        }
+
+        .content h2 span {
+            color: #9C6700;
+        }
+
+        .content form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .content form .form-cari {
+            display: flex;
+            justify-content: space-between;
+            width: 65%;
+        }
+
+        .content form label {
+            display: flex;
+            flex-direction: column;
+            width: 31%;
+            color: #9C6700;
+        }
+
+        .content form label select {
+            margin: 15px 0;
+            padding: 12px 20px;
+            border-radius: 50px;
+            border: none;
+            appearance: none;
+            /* Hilangkan tanda panah default */
+            background-color: #F2F2F2;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000000'%3E%3Cpath d='M7 10l5 5 5-5H7z'/%3E%3C/svg%3E");
+            /* Tanda panah */
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            /* Posisikan tanda panah */
+            background-size: 1rem;
+            /* Ukuran tanda panah */
+            cursor: pointer;
+            /* Pointer untuk dropdown */
+        }
+
+        form button {
+            background-color: #9C6700;
+            color: #ffffff;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transform: translateY(10px);
+            font-weight: 700;
+        }
+
+        /* card */
+        .kos-card {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            align-items: center;
+            justify-content: center;
+            margin-top: 50px;
+        }
+        .card {
+            width: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .card-image {
+            position: relative;
+            width: 100%;
+            height: 200px;
+        }
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .gradient-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+            pointer-events: none;
+        }
+
+        .card-content {
+            padding: 15px;
+            color: #fff;
+            background-color: #000;
+        }
+
+        .card-content h3 {
+            margin: 0 0 10px;
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        .card-content p {
+            margin: 0 0 5px;
+            font-size: 0.9rem;
+        }
+        .card-button {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #9C6700;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .card-button:hover {
+            background-color: #b97722;
+        }
+
+        footer{
+        position: relative;
+        bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="hero">
+        <nav>
+            <img src="icon.png" alt="logo">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="status.html">Status</a></li>
+                <li><a href="signup.html">Sign up</a></li>
+                <li><a href="signin.html" id="btn-signin">Sign in</a></li>
+            </ul>
+        </nav>
+
+        <div class="home">
+            <span>Sistem Pendukung Keputusan Pemilihan Kos</span>
+            <h1>Find Your Perfect Match</h1>
+            <p>Sistem cerdas kami siap bantu kamu menemukan kos terbaik yang sesuai kebutuhan dan gaya hidupmu. Lokasi
+                strategis, harga pas, fasilitas oke semua ada di sini!</p>
+            <a href="">Rekomendasi</a>
+        </div>
+    </section>
+
+    <section class="content">
+        <h2>Cari <span>KOS</span>mu</h2>
+        <form action="">
+            <div class="form-cari">
+                <label for="">
+                    Harga
+                    <select>
+                        <option value="">Rp 2.000.000</option>
+                        <option value="">Rp 3.000.000</option>
+                        <option value="">Rp 4.000.000</option>
+                    </select>
+                </label>
+                <label for="">
+                    Lokasi
+                    <select>
+                        <option value="">Anjani - 1 Gubuk Bangket</option>
+                        <option value="">Anjani - 2 Gubuk Bangket</option>
+                        <option value="">Anjani - 3 Gubuk Bangket</option>
+                    </select>
+                </label>
+                <label for="">
+                    Jenis
+                    <select>
+                        <option value="">Khusus Laki-Laki</option>
+                        <option value="">Khusus Wanita</option>
+                        <option value="">Khusus Pasangan Suami Istri</option>
+                    </select>
+                </label>
+            </div>
+            <button>Filter Data</button>
+        </form>
+
+        <div class="kos-card">
+            <div class="card">
+                <div class="card-image">
+                    <img src="kos.png" alt="Kos Santri Putra">
+                    <div class="gradient-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <h3>KOS SANTRI PUTRA</h3>
+                    <p>Lokasi : Gubuk Bangket</p>
+                    <p>Harga : Rp 2.500.000</p>
+                    <a href="detail.html" class="card-button">Detail</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-image">
+                    <img src="kos.png" alt="Kos Santri Putra">
+                    <div class="gradient-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <h3>KOS SANTRI PUTRA</h3>
+                    <p>Lokasi : Gubuk Bangket</p>
+                    <p>Harga : Rp 2.500.000</p>
+                    <a href="detail.html" class="card-button">Detail</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-image">
+                    <img src="kos.png" alt="Kos Santri Putra">
+                    <div class="gradient-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <h3>KOS SANTRI PUTRA</h3>
+                    <p>Lokasi : Gubuk Bangket</p>
+                    <p>Harga : Rp 2.500.000</p>
+                    <a href="detail.html" class="card-button">Detail</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-image">
+                    <img src="kos.png" alt="Kos Santri Putra">
+                    <div class="gradient-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <h3>KOS SANTRI PUTRA</h3>
+                    <p>Lokasi : Gubuk Bangket</p>
+                    <p>Harga : Rp 2.500.000</p>
+                    <a href="detail.html" class="card-button">Detail</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-image">
+                    <img src="kos.png" alt="Kos Santri Putra">
+                    <div class="gradient-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <h3>KOS SANTRI PUTRA</h3>
+                    <p>Lokasi : Gubuk Bangket</p>
+                    <p>Harga : Rp 2.500.000</p>
+                    <a href="detail.html" class="card-button">Detail</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-image">
+                    <img src="kos.png" alt="Kos Santri Putra">
+                    <div class="gradient-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <h3>KOS SANTRI PUTRA</h3>
+                    <p>Lokasi : Gubuk Bangket</p>
+                    <p>Harga : Rp 2.500.000</p>
+                    <a href="detail.html" class="card-button">Detail</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-image">
+                    <img src="kos.png" alt="Kos Santri Putra">
+                    <div class="gradient-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <h3>KOS SANTRI PUTRA</h3>
+                    <p>Lokasi : Gubuk Bangket</p>
+                    <p>Harga : Rp 2.500.000</p>
+                    <a href="detail.html" class="card-button">Detail</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-image">
+                    <img src="kos.png" alt="Kos Santri Putra">
+                    <div class="gradient-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <h3>KOS SANTRI PUTRA</h3>
+                    <p>Lokasi : Gubuk Bangket</p>
+                    <p>Harga : Rp 2.500.000</p>
+                    <a href="detail.html" class="card-button">Detail</a>
+                </div>
+            </div>
+            
+                    
+        </div>
+    </section>
+
+    
+
+    <!-- <footer>
+        <h4>&copy; KOSmu</h4>
+        <h5>Dibuat Dengan Menggunakan ❤</h5>
+    </footer> -->
+</body>
+
+</html>

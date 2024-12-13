@@ -1,0 +1,263 @@
+<html>
+
+<head>
+    <title>
+        Detail | KosMu
+    </title>
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background-color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            background-image: url('bg.png');
+            background-size: cover;
+            background-position: center;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        /* navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 8%;
+            position: relative;
+        }
+
+        ul {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        ul li {
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+
+        ul li a {
+            text-decoration: none;
+            color: #000000;
+            font-size: 14px;
+        }
+
+        ul li a:hover {
+            color: #9C6700;
+        }
+
+        #btn-signin {
+            background-color: #9C6700;
+            color: #ffffff;
+            padding: 10px 25px;
+            border-radius: 50px;
+        }
+
+        #btn-signin:hover {
+            background-color: #734d02;
+            box-shadow: 5px 5px 40px #ffda91;
+        }
+
+        /* keterangan */
+        .home {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .home span {
+            background-color: #F3E1C0;
+            color: #9C6700;
+            padding: 5px 25px;
+            border-radius: 50px;
+            margin-bottom: -40px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .home h1 {
+            font-size: 55px;
+            font-weight: 500;
+            margin-bottom: -15px;
+        }
+
+        .home p {
+            width: 44%;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .home a {
+            background-color: #9C6700;
+            color: #ffffff;
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            margin-top: 15px;
+        }
+
+        .home a:hover {
+            background-color: #734d02;
+            box-shadow: 5px 5px 40px #ffda91;
+        }
+
+        /* content */
+        .content {
+            background-color: #ffffff;
+            width: 90%;
+            height: 140%;
+            position: relative;
+            margin-top: -40px;
+            padding: 20px 80px;
+            border-radius: 42px 42px 0 0 ;
+            transform: translateX(-4px);margin-bottom: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .content h2 {
+            text-align: center;
+            font-size: 30px;
+        }
+
+        .content span {
+            background-color: #F3E1C0;
+            color: #9C6700;
+            padding: 5px 25px;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 500;
+            margin-top: 20px;
+            margin-bottom: -20px;
+        }
+
+        .content .detail-card{
+            display: flex;
+            gap: 40px;
+        }
+        .detail-card .detail-kr{
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        .detail-card .detail-kr a{
+            background-color: #9C6700;
+            text-decoration: none;
+            font-weight: bold;
+            color: #ffffff;
+            font-size: 16px;
+            width: 90%;
+            padding: 15px;
+            border-radius: 50px;
+            text-align: center;
+            box-shadow: 5px 5px 60px #ffda91;
+        }
+
+
+        /* bagian kiri */
+        .detail-kn{
+            width: 80%;
+        }
+        .detail-kn h3{
+            font-size: 35px;
+            font-weight: 600;
+            margin-bottom: -5px;
+        }
+        .detail-kn table tr td{
+            font-size: 18px;
+            font-weight: 500;
+        }
+        .detail-kn p{
+            margin-top: 20px;
+            font-size: 15px;
+            text-align: justify;
+            line-height: 32px;
+        }
+
+        footer{
+        position: relative;
+        bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="hero">
+        <nav>
+            <img src="icon.png" alt="logo">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="status.html">Status</a></li>
+                <li><a href="signup.html">Sign up</a></li>
+                <li><a href="signin.html" id="btn-signin">Sign in</a></li>
+            </ul>
+        </nav>
+
+        <div class="home">
+            <span>Sistem Pendukung Keputusan Pemilihan Kos</span>
+            <h1>Find Your Perfect Match</h1>
+            <p>Sistem cerdas kami siap bantu kamu menemukan kos terbaik yang sesuai kebutuhan dan gaya hidupmu. Lokasi
+                strategis, harga pas, fasilitas oke semua ada di sini!</p>
+            <a href="">Rekomendasi</a>
+        </div>
+    </section>
+
+    <section class="content">
+        <span>Detail</span>
+        <h2>Info KosMu</h2>
+
+        <div class="detail-card">
+            <div class="detail-kr">
+                <img src="kos.png" alt="">
+                <a href="">Ajukan Sewa</a>
+            </div>
+            <div class="detail-kn">
+                <h3>KOS SANTRI PUTRA</h3>
+                <table>
+                    <tr>
+                        <td>Harga</td>
+                        <td>: Rp 2.000.000/tahun </td>
+                    </tr>
+                    <tr>
+                        <td>Lokasi</td>
+                        <td>: Gubuk Bangket</td>
+                    </tr>
+                </table>
+                <p>pilihan ideal bagi kamu yang mengutamakan kenyamanan dan lokasi strategis.  kos ini menawarkan kamar berukuran 12 m² yang sudah dilengkapi dengan fasilitas lengkap seperti AC, kamar mandi dalam, Wi-Fi berkecepatan tinggi, serta lemari dan meja belajar. Terletak hanya 500 meter dari kampus utama, kos ini memudahkan akses ke berbagai tempat, seperti minimarket, restoran, dan transportasi umum. Lingkungannya aman dan tenang, cocok untuk kamu yang membutuhkan suasana belajar atau istirahat yang kondusif
+
+                </p>
+            </div>
+        </div>
+        
+
+        
+    </section>
+
+    
+
+    <!-- <footer>
+        <h4>&copy; KOSmu</h4>
+        <h5>Dibuat Dengan Menggunakan ❤</h5>
+    </footer> -->
+</body>
+
+</html>
