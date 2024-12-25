@@ -1,0 +1,11 @@
+{% load static %}
+<nav>
+    <img src="{% static 'img/icon.png' %}" alt="logo">
+    <ul>
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li><a href="{% url 'about' %}">About</a></li>
+        <li><a href=""">Status</a></li>
+        <li><a href=" {% url 'signup' %}">Sign up</a></li>
+        <li><a href="{% url 'signin' %}" id="btn-signin">Sign in</a></li>
+    </ul>
+</nav>

@@ -35,27 +35,6 @@
             margin-bottom: 100px;
         }
 
-        .kos-card {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            align-items: center;
-            justify-content: center;
-            margin-top: 50px;
-
-        }
-
-        .content {
-            background-color: #ffffff;
-            width: auto;
-            height: 100%;
-            position: relative;
-            padding: 20px 80px;
-            border-radius: 42px 42px 0 0;
-            /* transform: translateX(-20px); */
-            margin-top: -35px;
-            margin-bottom: 100px;
-        }
 
 
         /* detailz */
@@ -88,7 +67,7 @@
 
         .details h1 {
             color: #9C6700;
-            font-size:60px;
+            font-size: 60px;
             margin: 10px 0;
         }
 
@@ -96,9 +75,9 @@
             color: #9C6700;
             font-size: 16px;
             margin: 10px 0;
-            display: flex;  
+            display: flex;
             align-items: center;
-            gap:5px;
+            gap: 5px;
         }
 
         .details .rating img {
@@ -110,7 +89,7 @@
         .details .info {
             color: #333;
             font-size: 16px;
-            margin: 20px 0;
+            margin: 10px 0;
         }
 
         .details .description {
@@ -121,7 +100,7 @@
 
         .details .read-more {
             color: #9C6700;
-            font-size: 15px;
+            font-size: 14px;
             text-decoration: none;
             display: block;
             margin: 10px 0;
@@ -154,6 +133,34 @@
                 width: 100%;
             }
         }
+
+        /* Styling untuk label */
+        .form-group {
+            width: 100%;
+        }
+
+        .content form label {
+            margin-bottom: 5px;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            color: #9C6700;
+        }
+
+        /* Styling untuk input field */
+        .form-group input {
+            background-color: #f3e1c07d;
+            padding: 10px 14px;
+            /* Memberikan padding untuk ruang dalam input */
+            border-radius: 50px;
+            /* Memberikan border-radius agar sudut input melengkung */
+            border: 1px solid grey;
+            /* Memberikan border dengan warna abu-abu */
+            width: 100%;
+            /* Membuat input mengambil lebar penuh (100%) */
+            box-sizing: border-box;
+            /* Agar padding tidak mempengaruhi lebar keseluruhan */
+        }
     </style>
 </head>
 
@@ -170,49 +177,54 @@
         </div>
     </section>
 
-
     <section class="content">
         <div class="detail-content">
-            <img alt="Modern house with large windows and a dark exterior" height="300" src="{{ data_kos.foto.url }}"
-                alt="{{ data_kos.nama }} Image" width="400" />
+            <img alt="Modern house with large windows and a dark exterior" height="300" src="{{ kos.foto.url }}"
+                alt="{{ kos.nama }} Image" width="400" />
             <div class="details">
                 <div class="badge">
-                    Detail KosMu
+                    Form Sewa KosMu
                 </div>
                 <h1>
-                    {{ data_kos.nama }}
+                    {{ kos.nama }}
                 </h1>
                 <div class="rating" style="display: flex; gap: 15px;">
                     <div class="jlh-kamar"
                         style="background-color: #333; padding: 8px 15px; color: white; border-radius: 8px; display: flex; gap: 10px;">
                         <img src="{% static 'img/bed.svg' %}" alt="bed">
-                        {{ data_kos.Jumlah_Kamar }} Kamar
+                        {{ kos.Jumlah_Kamar }} Kamar
                     </div>
                     <div class="jenis"
                         style="background-color: #333; padding: 8px 15px; color: white; border-radius: 8px; display: flex; gap: 10px;">
                         <img src="{% static 'img/user.svg' %}" alt="bed">
-                        {{ data_kos.jenis }}
+                        {{ kos.jenis }}
                     </div>
                     (245 Ulasan)
                 </div>
-                <div class="info" style="font-size: 18px;">
-                    Lokasi : {{ data_kos.alamat }}
+                <div class="info">
+                    Lokasi : {{ kos.alamat }}
                     <br />
-                    Harga : Rp {{ data_kos.harga }}/hari
+                    Harga : Rp {{ kos.harga }}/hari
                 </div>
-                <div class="description" style="font-size: 15px;">
-                    <span style="font-weight: 500; font-size: 18px;">Deskripsi</span> <br>
-                    {{ data_kos.deskripsi }} ...
-                </div>
-                <a class="read-more" href="#">
-                    Selengkapnya
-                </a>
-                <a class="apply-button" href="{% url 'buat_pesanan' data_kos.id %}">
-                    Ajukan Sewa
-                </a>
+                <!-- from sewa -->
+                <form method="post" style="display: flex; justify-content: space-evenly; width: 80%;">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ form.tanggal_mulai.label_tag }} <!-- Menampilkan label dengan tag label -->
+                        {{ form.tanggal_mulai }} <!-- Input field -->
+                    </div>
+                    <div class="form-group">
+                        {{ form.tanggal_akhir.label_tag }}
+                        {{ form.tanggal_akhir }}
+                    </div>
+                    <button type="submit" class="btn btn-primary"
+                        style="transform: translateY(14px);width: 50%; box-shadow: 5px 5px 40px #8a6500;">Ajukan
+                        Sewa</button>
+                </form>
             </div>
         </div>
     </section>
+
 </body>
 
 </html>
