@@ -1,0 +1,307 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="shortcut icon" href="{% static 'img/logo.png' %}" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+</head>
+<style>
+    body {
+        background-color: rgb(239, 239, 239);
+        font-family: "Poppins", sans-serif;
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 8%;
+        position: relative;
+    }
+
+    ul {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+    }
+
+    ul li {
+        list-style: none;
+        display: flex;
+        align-items: center;
+    }
+
+    ul li a {
+        text-decoration: none;
+        color: #000000;
+        font-size: 14px;
+    }
+
+    ul li a:hover {
+        color: #9C6700;
+    }
+
+    #btn-signin {
+        background-color: #9C6700;
+        color: #ffffff;
+        padding: 10px 25px;
+        border-radius: 50px;
+    }
+
+    #btn-signin:hover {
+        background-color: #734d02;
+        box-shadow: 5px 5px 40px #ffda91;
+    }
+
+    section {
+        /* margin: 50px 80px; */
+        padding: 12px 8%;
+
+    }
+
+    .status_menu {
+        display: flex;
+        gap: 10px;
+    }
+
+    .status_menu a {
+        text-decoration: none;
+        color: black;
+        font-weight: 400;
+        padding: 4px 12px;
+    }
+
+    .status_menu a:nth-child(1) {
+        border-bottom: 4px solid rgb(46, 43, 226);
+    }
+
+    .status_menu a span {
+        padding: 2px 4px;
+        border-radius: 50px;
+        color: white;
+        font-weight: 500;
+    }
+
+    .status_menu a:nth-child(1) span {
+        background-color: rgb(46, 43, 226);
+    }
+
+    .status_menu a:nth-child(2) span {
+        background-color: rgb(43, 226, 107);
+    }
+
+    .status_menu a:nth-child(3) span {
+        background-color: rgb(226, 198, 43);
+    }
+
+    .status_menu a:nth-child(4) span {
+        background-color: rgb(226, 43, 43);
+    }
+
+    .status_filter {
+        background-color: white;
+        margin-bottom: 20px;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        align-items: center;
+    }
+
+    .status_filter form {
+        width: 30%;
+    }
+
+    .status_filter form input {
+        border: 2px solid gray;
+        padding: 8px 12px;
+        width: 60%;
+        border-radius: 8px;
+    }
+
+    .status_filter form select {
+        border: none;
+        padding: 8px;
+        border-radius: 4px;
+        width: 20%;
+
+    }
+
+    .status_filter form select:nth-child(1) {
+        background-color: #FBEFD5;
+        border: 3px solid #EDC05B;
+    }
+
+    .status_filter form select:nth-child(2) {
+        background-color: #CAF5DA;
+        border: 3px solid #5AAB82;
+    }
+
+    .status_filter form select:nth-child(3) {
+        background-color: #788ef4c8;
+        border: 3px solid #526AD4;
+    }
+
+    .status_filter form button {
+        border: 2px solid gray;
+        padding: 8px 22px;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+
+    .status_detail {
+        background-color: white;
+        border-radius: 22px;
+        padding: 16px 20px;
+        box-shadow: 5px 10px 50px rgba(201, 201, 201, 0.48);
+        margin-bottom: 20px;
+    }
+
+    /* .status_detail .status_ket {} */
+
+    .status_detail .status_ket h3 {
+        font-weight: 500;
+        font-size: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: 12px;
+        margin-bottom: -15px;
+        margin-top: -0px;
+    }
+
+    .status_detail .status_ket h4 {
+        font-weight: 300;
+        font-size: 12px;
+    }
+
+    .status_detail .status_ket span {
+        font-weight: 600;
+    }
+
+    .status_detail .status_ket #sts {
+        background-color: rgb(43, 226, 107);
+        color: rgb(255, 255, 255);
+        font-size: 14px;
+        padding: 2px 12px;
+        border-radius: 50px;
+    }
+
+    .status_detail_kos {
+        display: flex;
+        gap: 20px;
+    }
+
+    .status_detail_kos img {
+        height: 170px;
+        width: auto;
+        border-radius: 22px;
+    }
+
+    .status_detail_kos h1 {
+        font-size: 30px;
+        margin-bottom: -2px;
+        margin-top: -7px;
+    }
+
+    .status_detail_kos span {
+        font-size: 12px;
+        padding-top: 40px;
+        display: block;
+        color: red;
+    }
+</style>
+
+<body>
+    {% include 'component/navbar.html' %}
+    <section>
+        <div class="title">
+            <h2 style="font-size:35px;">Status Pengajuan Sewa</h2>
+            <span style="margin: -30px 0 40px 0; display: block; font-size: 12px;"><span
+                    style="font-weight: 600;">Hei👋..{{user}}</span>, silahkan cek status
+                pengajuan sewa
+                kosmu disini!</span>
+        </div>
+        <div class="status_menu">
+            <a href="#">All <span>{{jlh_status_all}}</span></a>
+            <a href="#">Pandding <span>{{jlh_status_pending}}</span></a>
+            <a href="#">Confirm <span>{{jlh_status_confirmed}}</span></a>
+            <a href="#">Cancel <span>{{jlh_status_canceled}}</span></a>
+        </div>
+
+        <div class="status_filter">
+            <form action="">
+                <input type="text" placeholder="Cari status kosmu">
+                <button>Cari</button>
+            </form>
+            <form action="">
+                <select name="tgl" id="tgl">
+                    <option value="tgl1">baru</option>
+                    <option value="tgl1">lama</option>
+                </select>
+                <select name="status_cek" id="status_cek">
+                    <option value="tgl1">pandding</option>
+                    <option value="tgl1">confirm</option>
+                    <option value="tgl1">cancel</option>
+                </select>
+                <select name="status_cek" id="status_cek">
+                    <option value="tgl1">jenis</option>
+                    <option value="tgl1">confirm</option>
+                    <option value="tgl1">cancel</option>
+                </select>
+                <button type="submit">Filter</button>
+            </form>
+        </div>
+
+        {% for data in data_pesanan %}
+        <div class="status_detail">
+            <div class="status_ket">
+                <h3>Pengajuan Sewa <span>#0{{data.id}}</span>
+                    <span id="sts" style="background-color: 
+                        {% if data.status == 'pending' %}
+                            rgb(43, 226, 107)
+                        {% elif data.status == 'confirmed' %}
+                            rgb(226, 198, 43)
+                        {% elif data.status == 'canceled' %}
+                            rgb(226, 43, 43)
+                        {% endif %}">
+                        {{data.status}}
+                    </span>
+                </h3>
+                <h4>{{data.tanggal_pesan}} | ID : <span>0{{data.id}}</span></h4>
+            </div>
+            <div class="status_detail_kos">
+                <img src="{{data.kos.foto.url}}" alt="kos">
+                <div class="">
+                    <h1>{{data.kos.nama}}</h1>
+                    <table>
+                        <tr>
+                            <td>HARGA</td>
+                            <td>: Rp. {{data.kos.harga}}</td>
+                        </tr>
+                        <tr>
+                            <td>LOKASI</td>
+                            <td>: {{data.kos.alamat}}</td>
+                        </tr>
+
+                    </table>
+                    <span>*Kos bisa mulai di tempati setelah pengajuan sewa berhasil</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </section>
+
+
+</body>
+
+</html>

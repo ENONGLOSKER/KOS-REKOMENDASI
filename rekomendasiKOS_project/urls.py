@@ -26,11 +26,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.index,name='index'),
     path('about/',views.about,name='about'),
-    path('status/<int:id>/',views.status,name='status'),
+    path('status/',views.status,name='status'),
+    path('detail/<int:id>/',views.detail,name='detail'),
     path('buat_pesanan/<int:id>/',views.buat_pesanan,name='buat_pesanan'),
     
-    path('singin/',views.signin,name='signin'),
-    path('signup/',views.signup,name='signup'),
+    path('singin/',views.signin_user,name='signin'),
+    path('signup/',views.signup_user,name='signup'),
+    path('signout/',views.signout_user,name='signout'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

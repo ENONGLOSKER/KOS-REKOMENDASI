@@ -127,12 +127,35 @@
                     <h3 style="text-transform: uppercase;">KOS {{kos.nama}}</h3>
                     <p>Lokasi : {{kos.alamat}}</p>
                     <p>Harga : Rp {{kos.harga}}</p>
-                    <a href="{% url 'status' kos.id %}" class="card-button {% if not kos.tersedia %}disabled{% endif %}"
+                    <a href="{% url 'detail' kos.id %}" class="card-button {% if not kos.tersedia %}disabled{% endif %}"
                         style="{% if not kos.tersedia %}background-color: grey;{% endif %}">Detail</a>
                 </div>
             </div>
             {% endfor %}
         </div>
+    </section>
+
+    <section id="about" style="padding: 12px 8%;">
+        <div class="about-title">
+            <span
+                style="background-color: #d7b776db; padding: 4px 12px; border-radius: 50px; margin-bottom: -40px; display: block; width: fit-content;">About
+                Us </span>
+            <h3 style="font-size: 48px; color: #9C6700;">Tentang Kosmu</h3>
+        </div>
+        <div class="about-detail" style="background-color: #9C6700; padding: 48px 44px ; ">
+            <p style="width: 75%; color: white; ">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Explicabo aspernatur voluptatum, corrupti alias quas
+                consequuntur rerum dignissimos sint, officiis provident vel eius delectus ipsum quos cum earum. Expedita
+                dignissimos autem, magni repellat itaque, aliquid voluptatum iste eum quos totam consequatur assumenda alias
+                necessitatibus? Quia maiores odit odio accusamus ipsum nobis facilis tenetur quisquam quod voluptatem
+                aspernatur
+                corrupti illo ut alias obcaecati deleniti, ipsa esse porro culpa natus voluptates quae tempore repudiandae!
+                Porro distinctio modi cupiditate inventore quod odit repudiandae dignissimos accusamus nobis excepturi esse
+                tempore dicta, nam consequuntur minima? Odit tenetur veritatis numquam excepturi dignissimos dolore corporis
+                qui, reiciendis expedita!</p>
+        </div>
+        <img src="{% static 'img/kos.png' %}" alt="gambar"
+            style="width: auto; height: 400px; position: absolute; right: 0; margin-top: -240px;">
     </section>
 
 </body>
