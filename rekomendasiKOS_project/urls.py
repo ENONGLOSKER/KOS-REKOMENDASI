@@ -24,6 +24,15 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # dashboard
+    path('dashboard/',views.dashboard,name='dashboard'),
+    path('dashboard/kos/',views.dashboard_kos,name='dsb_kos'),
+    path('dashboard/kos/add/',views.dashboard_kos_add,name='dsb_add_kos'),
+    path('dashboard/kos/update/<int:id>/',views.dashboard_kos_edit,name='dsb_edit_kos'),
+    path('dashboard/kos/delete/<int:id>/',views.dashboard_kos_delete,name='dsb_delete_kos'),
+    path('dashboard/pesanan/',views.dashboard_pesanan,name='dsb_pesanan'),
+
+    # home
     path('',views.index,name='index'),
     path('about/',views.about,name='about'),
     path('status/',views.status,name='status'),

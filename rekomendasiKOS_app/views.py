@@ -7,16 +7,72 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 # app
 from .models import Kos, Pesanan
-from .forms import PesananForm
+from .forms import PesananForm, KosForm
 
 # Create your views here.
+# dashboad ---------------------------------------------------------
+@login_required
+def dashboard(request):
+    return render(request, 'dashboard.html')
+def dashboard_kos(request):
+    data_kos = Kos.objects.all()
+    context = {
+        'data_kos': data_kos,
+    }
+
+    return render(request, 'dashboard_kos.html', context)
+def dashboard_kos_add(request):
+    if request.method == 'POST':
+        form = KosForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('dsb_kos')
+    else:
+        form = KosForm()    
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'dashboard_form.html', context)
+
+def dashboard_kos_edit(request, id):
+    data_kos = get_object_or_404(Kos, id=id)
+    if request.method == 'POST':
+        form = KosForm(request.POST, request.FILES, instance=data_kos)
+        if form.is_valid():
+            form.save()
+            return redirect('dsb_kos')
+    else:
+        form = KosForm(instance=data_kos)    
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'dashboard_form.html', context)
+
+def dashboard_kos_delete(request, id):
+    data_kos = get_object_or_404(Kos, id=id)
+    data_kos.delete()
+    return redirect('dsb_kos')
+
+def dashboard_pesanan(request):
+    data_pesanan = Pesanan.objects.all()
+    context = {
+        'data_pesanan': data_pesanan,
+    }
+
+    return render(request, 'dashboard_pesanan.html', context)
+
+#home ---------------------------------------------------------
 def index(request):
+    
     data_kos = Kos.objects.all()
 
     context = {
         'data_kos': data_kos,
     }
     return render(request, 'index.html',context)
+@login_required
 def status(request):
     user_activ = request.user
     data_pesanan_all = Pesanan.objects.filter(user=user_activ)
@@ -104,7 +160,7 @@ def signin_user(request):
         if user is not None:
             login(request, user)
             if user.is_superuser:
-                return redirect('/admin/')
+                return redirect('dashboard')
             else:
                 
                 return redirect('index')

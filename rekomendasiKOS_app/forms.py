@@ -1,5 +1,25 @@
 from django import forms
-from .models import Pesanan
+from .models import Pesanan,Kos
+
+class KosForm(forms.ModelForm):
+    class Meta:
+        model = Kos
+        fields = "__all__"
+
+        widgets = {
+            'nama':forms.TextInput(attrs={'class':'form-control'}),
+            'alamat':forms.Textarea(attrs={'class':'form-control'}),
+            'harga':forms.NumberInput(attrs={'class':'form-control'}),
+            'Jumlah_Kamar':forms.NumberInput(attrs={'class':'form-control'}),
+            'jenis':forms.Select(attrs={'class':'form-control'}, choices=[('Laki-Laki', 'Laki-Laki'), ('Perempuan', 'Perempuan'), ('Pasutri', 'Pasutri')]),
+            'jarak_ke_kampus':forms.NumberInput(attrs={'class':'form-control'}),
+            'fasilitas':forms.NumberInput(attrs={'class':'form-control'}),
+            'luas_kamar':forms.NumberInput(attrs={'class':'form-control'}),
+            'deskripsi':forms.Textarea(attrs={'class':'form-control'}),
+            'foto':forms.FileInput(attrs={'class':'form-control'}),
+            # 'tersedia':forms.CheckboxInput(attrs={'class':'form-control'}),
+        }
+
 
 class PesananForm(forms.ModelForm):
     kos = forms.CharField(widget=forms.HiddenInput(), required=False)

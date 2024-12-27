@@ -136,3 +136,6 @@ MESSAGE_TAGS = {
     messages.SUCCESS : 'success',
     50: 'critical',
 }
+
+# redirect login
+LOGIN_URL = 'index'
