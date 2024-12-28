@@ -6,11 +6,50 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 # app
-from .models import Kos, Pesanan
-from .forms import PesananForm, KosForm
+from .models import Kos, Pesanan, Kriteria
+from .forms import PesananForm, KosForm, KriteriaForm
 
 # Create your views here.
 # dashboad ---------------------------------------------------------
+def dashboard_kriteria(request):
+    data_kriteria = Kriteria.objects.all()
+    context = {
+        'data_kriteria': data_kriteria,
+    }
+    return render(request, 'dashboard_kriteria.html', context)
+def dashboard_kriteria_add(request):
+    if request.method == 'POST':
+        form = KriteriaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('dsb_kriteria')
+    else:
+        form = KriteriaForm()    
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'dashboard_form.html', context)
+def dashboard_kriteria_edit(request, id):
+    data_kriteria = get_object_or_404(Kriteria, id=id)
+    if request.method == 'POST':
+        form = KriteriaForm(request.POST, instance=data_kriteria)
+        if form.is_valid():
+            form.save()
+            return redirect('dsb_kriteria')
+    else:
+        form = KriteriaForm(instance=data_kriteria)    
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'dashboard_form.html', context)
+
+def dashboard_kriteria_delete(request, id):
+    data_kriteria = get_object_or_404(Kriteria, id=id)
+    data_kriteria.delete()
+    return redirect('dsb_kriteria')
+
 @login_required
 def dashboard(request):
     return render(request, 'dashboard.html')
@@ -63,6 +102,18 @@ def dashboard_pesanan(request):
 
     return render(request, 'dashboard_pesanan.html', context)
 
+def status_update(request, id):
+    data_pesanan = get_object_or_404(Pesanan, id=id)
+    if request.method == 'POST':
+        new_status = request.POST.get('status')
+        if new_status in dict(Pesanan._meta.get_field('status').choices):
+            data_pesanan.status = new_status
+            data_pesanan.save()
+            return redirect('dsb_pesanan')  # Redirect ke halaman daftar pesanan
+    return redirect('dsb_pesanan')
+
+
+
 #home ---------------------------------------------------------
 def index(request):
     
@@ -77,20 +128,11 @@ def status(request):
     user_activ = request.user
     data_pesanan_all = Pesanan.objects.filter(user=user_activ)
 
-    #jumlah data berdasarkan status
-    jlh_status_all = Pesanan.objects.all().count()
-    jlh_status_pending = Pesanan.objects.filter(status='pending').count()
-    jlh_status_confirmed = Pesanan.objects.filter(status='confirmed').count()
-    jlh_status_canceled = Pesanan.objects.filter(status='canceled').count()
-    
-    # debug
-    print('-------------------------------------------')
-    print('data status  all =', jlh_status_all)
-    print('data status  pending =', jlh_status_pending)
-    print('data status  confirm =', jlh_status_confirmed)
-    print('data status  cancel =', jlh_status_canceled)
-    print('-------------------------------------------')
-     
+    #jumlah data berdasarkan status untuk user yang aktif
+    jlh_status_all = Pesanan.objects.filter(user=user_activ).count()
+    jlh_status_pending = Pesanan.objects.filter(user=user_activ, status='pending').count()
+    jlh_status_confirmed = Pesanan.objects.filter(user=user_activ, status='confirmed').count()
+    jlh_status_canceled = Pesanan.objects.filter(user=user_activ, status='canceled').count()
     
     context = {
         'data_pesanan': data_pesanan_all,
@@ -150,6 +192,19 @@ def buat_pesanan(request, id):
     return render(request, 'form_sewa.html', context)
 
 
+def batal_pesanan(request, id):
+    pesanan = get_object_or_404(Pesanan, id=id)
+
+    if request.method == "POST":
+        if pesanan.status == 'pending':
+            pesanan.status = 'canceled'
+            pesanan.save()
+            messages.success(request, "Penyewaan berhasil dibatalkan.")
+            return redirect('status')
+        else:
+            messages.error(request, "Maaf, pesanan ini tidak dapat dibatalkan karena statusnya telah dikonfirmasi.")
+            return redirect('status')
+    
 def about(request):
     return render(request, 'about.html')
 def signin_user(request):
