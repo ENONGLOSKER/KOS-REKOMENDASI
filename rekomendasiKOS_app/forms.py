@@ -8,6 +8,7 @@ class KriteriaForm(forms.ModelForm):
 
         widgets = {
             'nama': forms.TextInput(attrs={'class': 'form-control'}),
+            'keterangan': forms.TextInput(attrs={'class': 'form-control'}),
             'bobot': forms.NumberInput(attrs={'class': 'form-control'}),
             'tipe': forms.Select(attrs={'class': 'form-control'}, choices=[('benefit', 'Benefit'), ('cost', 'Cost')]),
         }

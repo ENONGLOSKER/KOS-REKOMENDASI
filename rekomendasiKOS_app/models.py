@@ -21,6 +21,7 @@ class Kos(models.Model):
 # Model untuk kriteria SPK
 class Kriteria(models.Model):
     nama = models.CharField(max_length=255)
+    keterangan = models.CharField(max_length=255)
     bobot = models.DecimalField(max_digits=5, decimal_places=2)  # Bobot kriteria (0.0 - 1.0)
     tipe = models.CharField(max_length=10, choices=(('benefit', 'Benefit'), ('cost', 'Cost')))
 

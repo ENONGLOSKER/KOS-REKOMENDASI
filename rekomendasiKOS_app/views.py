@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db.models import Max, Min
+from decimal import Decimal
 # app
 from .models import Kos, Pesanan, Kriteria, SubKriteria, Penilaian
 from .forms import PesananForm, KosForm, KriteriaForm, SubKriteriaForm, PenilaianForm
@@ -44,26 +45,58 @@ def dashboard_rekomendasi(request):
         'kriteria5': 'benefit',
     }
 
+    # Bobot kriteria (contoh, sesuaikan dengan kebutuhan)
+    weights = {
+        'kriteria1': Kriteria.objects.get(keterangan='kriteria1').bobot,
+        'kriteria2': Kriteria.objects.get(keterangan='kriteria2').bobot,
+        'kriteria3': Kriteria.objects.get(keterangan='kriteria3').bobot,
+        'kriteria4': Kriteria.objects.get(keterangan='kriteria4').bobot,
+        'kriteria5': Kriteria.objects.get(keterangan='kriteria5').bobot,
+    }
+
     # Normalisasi data
     normalisasi_data = []
+    skor_wsm = []
+    skor_wpm = []
+    penggabungan_skor = []
+
     for penilaian in data_penilaian:
-        normalized = {
-            'alternatif': penilaian.kos.nama,
-        }
+        normalized = {'alternatif': penilaian.kos.nama}
+        wsm_score = 0
+        wpm_score = 1
+
         for kriteria, tipe in kriteria_types.items():
             nilai = getattr(penilaian, kriteria).nilai
             if tipe == 'benefit':
                 normalized[kriteria] = nilai / (max_values[kriteria] or 1)
             elif tipe == 'cost':
                 normalized[kriteria] = (min_values[kriteria] or 1) / (nilai or 1)
-        normalisasi_data.append(normalized)
 
-    # Mengirim context ke template
+            # Perhitungan WSM
+            wsm_score += Decimal(weights[kriteria]) * normalized[kriteria]
+
+            # Perhitungan WPM
+            wpm_score *= normalized[kriteria] ** Decimal(weights[kriteria])
+
+        normalisasi_data.append(normalized)
+        skor_wsm.append({'alternatif': penilaian.kos.nama, 'score': wsm_score})
+        skor_wpm.append({'alternatif': penilaian.kos.nama, 'score': wpm_score})
+        penggabungan_skor.append({'alternatif': penilaian.kos.nama, 'score': Decimal(0.5) * wsm_score + Decimal(0.5) * wpm_score})
+
+    skor_gabungan_tertinggi = max(penggabungan_skor, key=lambda x: x['score'])
+    alternatif_tertinggi = skor_gabungan_tertinggi['alternatif']
+    skor_tertinggi = skor_gabungan_tertinggi['score']
+
     context = {
         'data_penilaian': data_penilaian,
         'max_values': max_values,
         'min_values': min_values,
         'normalisasi_data': normalisasi_data,
+        'skor_wsm': skor_wsm,
+        'skor_wpm': skor_wpm,
+        'penggabungan_skor': penggabungan_skor,
+        'alternatif_tertinggi': alternatif_tertinggi,
+        'skor_tertinggi': skor_tertinggi,
     }
     return render(request, 'dashboard_penilaian.html', context)
 

@@ -136,6 +136,7 @@
                                     <thead class="text-center align-middle">
                                         <tr>
                                             <th class="align-middle">NO</th>
+                                            <th class="align-middle">KETERANGAN</th>
                                             <th class="align-middle">NAMA</th>
                                             <th class="align-middle">BOBOT</th>
                                             <th class="align-middle">TIPE</th>
@@ -147,6 +148,7 @@
                                         {%for data in data_kriteria%}
                                         <tr style="text-transform: capitalize;">
                                             <td class="text-center">{{forloop.counter}}</td>
+                                            <td class="text-center">{{data.keterangan}}</td>
                                             <td class="text-center">
                                                 <a href="{% url 'dsb_subkriteria' data.id %}">{{data.nama}}</a>
                                             </td>

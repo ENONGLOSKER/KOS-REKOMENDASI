@@ -121,11 +121,12 @@
             <div class="row">
                 <!-- Area tabel -->
                 <div class="col-xl-12 col-lg-9">
+                    <!-- TABEL -->
                     <div class="card shadow mb-5">
                         <!-- Card Header - Dropdown -->
                         <div class="card shadow">
                             <div class="card-header pb-3 d-flex justify-content-between align-items-center">
-                                <h6 class="m-0 font-weight-bold text-primary">Data PENILAIAN</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">DATA TABEL PENILAIAN</h6>
                                 <a href="{% url 'dsb_penilaian_add' %}"
                                     class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                         class="fas fa-plus fa-sm text-white-50"></i> Add Penilaian
@@ -195,11 +196,12 @@
                         </div>
                     </div>
 
+                    <!-- TABEL UNTUK NORMALISASI -->
                     <div class="card shadow mb-5">
                         <!-- Card Header - Dropdown -->
                         <div class="card shadow">
                             <div class="card-header pb-3 d-flex justify-content-between align-items-center">
-                                <h6 class="m-0 font-weight-bold text-primary">Data NORMALISASI</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">DATA NORMALISASI</h6>
                                 <!-- <a href="{% url 'dsb_penilaian_add' %}"
                                     class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                         class="fas fa-plus fa-sm text-white-50"></i> Add Penilaian
@@ -235,6 +237,89 @@
                             </div>
                         </div>
                     </div>
+                    <!-- TABEL UNTUK SKOR WSM -->
+                    <div class="card shadow mb-5">
+                        <!-- Card Header - Dropdown -->
+                        <div class="card shadow">
+                            <div class="card-header pb-3 d-flex justify-content-between align-items-center">
+                                <h6 class="m-0 font-weight-bold text-primary">DATA TABEL SKOR</h6>
+                                <!-- <a href="{% url 'dsb_penilaian_add' %}"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            class="fas fa-plus fa-sm text-white-50"></i> Add Penilaian
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </a> -->
+                            </div>
+                            <div class="card-body table-responsive">
+                                <h4 class="mt-4">Tabel Skor WSM</h4>
+                                <table class="table table-bordered">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th>NO</th>
+                                            <th>ALTERNATIF</th>
+                                            <th>SKOR WSM</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for data in skor_wsm %}
+                                        <tr class="text-center">
+                                            <td>{{ forloop.counter }}</td>
+                                            <td class="text-left">{{ data.alternatif }}</td>
+                                            <td>{{ data.score|floatformat:4 }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                    
+                                <h4 class="mt-4">Tabel Skor WPM</h4>
+                                <table class="table table-bordered">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th>NO</th>
+                                            <th>ALTERNATIF</th>
+                                            <th>SKOR WPM</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for data in skor_wpm %}
+                                        <tr class="text-center">
+                                            <td>{{ forloop.counter }}</td>
+                                            <td class="text-left">{{ data.alternatif }}</td>
+                                            <td>{{ data.score|floatformat:4 }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                    
+                                <h4 class="mt-4">Tabel Penggabungan Skor</h4>
+                                <table class="table table-bordered">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th>NO</th>
+                                            <th>ALTERNATIF</th>
+                                            <th>SKOR GABUNGAN</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for data in penggabungan_skor %}
+                                        <tr class="text-center">
+                                            <td>{{ forloop.counter }}</td>
+                                            <td class="text-left">{{ data.alternatif }}</td>
+                                            <td>{{ data.score|floatformat:4 }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                    
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="rekomendasi" n
+                        style="background-color: red; padding:15px  10px ; width: 100%; color: black; text-align: center;">
+                        <p style="font-size: 27px; text-align: center;">😍Rekomendasi Kos Terbaik untuk Anda adalah
+                            <strong>🏠 KOS - {{alternatif_tertinggi }}</strong>,
+                            dengan skor yang sangat
+                            impresif sebesar <strong>{{skor_tertinggi|floatformat:4}}</strong>!
+                        </p>
                 </div>
             </div>
         </div>
