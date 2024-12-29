@@ -11,7 +11,7 @@
         </button>
 
         <div class="">
-            <h1 class="h3 mb-0 text-gray-800 font-weight-bold">Dashboard</h1>
+            <h1 class="h3 mb-0 text-gray-800 font-weight-bold">PENILAIAN</h1>
         </div>
 
         <!-- sweet alert -->
@@ -121,61 +121,49 @@
             <div class="row">
                 <!-- Area tabel -->
                 <div class="col-xl-12 col-lg-9">
-                    <div class="card shadow mb-UKM 4">
+                    <div class="card shadow mb-5">
                         <!-- Card Header - Dropdown -->
                         <div class="card shadow">
                             <div class="card-header pb-3 d-flex justify-content-between align-items-center">
-                                <h6 class="m-0 font-weight-bold text-primary">Data KOS</h6>
-                                <a href="{% url 'dsb_add_kos' %}"
+                                <h6 class="m-0 font-weight-bold text-primary">Data PENILAIAN</h6>
+                                <a href="{% url 'dsb_penilaian_add' %}"
                                     class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                        class="fas fa-plus fa-sm text-white-50"></i> Add KOS
+                                        class="fas fa-plus fa-sm text-white-50"></i> Add Penilaian
                                 </a>
                             </div>
                             <div class="card-body table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead class="text-center align-middle">
+                                    <thead class="text-center">
                                         <tr>
-                                            <th class="align-middle">NO</th>
-                                            <th class="align-middle">FOTO</th>
-                                            <th class="align-middle">ALAMAT</th>
-                                            <th class="align-middle">HARGA</th>
-                                            <th class="align-middle">JARAK KE KAMPUS</th>
-                                            <th class="align-middle">FASILITAS</th>
-                                            <th class="align-middle">LUAS KAMAR</th>
-                                            <th class="align-middle">DESKRIPSI</th>
-                                            <th class="align-middle">JLH KAMAR</th>
-                                            <th class="align-middle">ACTION</th>
+                                            <th>NO</th>
+                                            <th>ALTERNATIF</th>
+                                            <th>KRITERIA1</th>
+                                            <th>KRITERIA2</th>
+                                            <th>KRITERIA3</th>
+                                            <th>KRITERIA4</th>
+                                            <th>KRITERIA5</th>
+                                            <th>ACTION</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
-                                        {%for data in data_kos%}
-                                        <tr style="text-transform: capitalize;">
-                                            <td class="text-center">{{forloop.counter}}</td>
-                                            <td class="text-center d-flex flex-column align-items-center">
-                                                <p class="font-weight-bold">{{data.nama}}</p>
-                                                <span class="badge bg-primary text-white"
-                                                    style="padding: 4px 10px; width: fit-content; margin-bottom: 10px;">Khusus
-                                                    {{data.jenis}}</span>
-                                                <img src="{{data.foto.url}}" alt="{{data.nama}}">
-                                            </td>
-                                            <td class="text-center">{{data.alamat}}</td>
-                                            <td class="text-center">{{data.harga}}</td>
-                                            <td class="text-center">{{data.jarak_ke_kampus}}</td>
-                                            <td class="text-center">{{data.fasilitas}}</td>
-                                            <td class="text-center">{{data.luas_kamar}}</td>
-                                            <td>{{data.deskripsi | truncatewords:10}}</td>
-                                            <td class="text-center">{{data.Jumlah_Kamar}}</td>
-
-                                            <td class="text-center">
-                                                <a href="{% url 'dsb_edit_kos' data.id %}"
+                                        {% for penilaian in data_penilaian %}
+                                        <tr class="text-center">
+                                            <td>{{ forloop.counter }}</td>
+                                            <td class="text-left">{{ penilaian.kos.nama }}</td>
+                                            <td>{{ penilaian.kriteria1.nilai }}</td>
+                                            <td>{{ penilaian.kriteria2.nilai }}</td>
+                                            <td>{{ penilaian.kriteria3.nilai }}</td>
+                                            <td>{{ penilaian.kriteria4.nilai }}</td>
+                                            <td>{{ penilaian.kriteria5.nilai }}</td>
+                                            <td>
+                                                <a href="{% url 'dsb_penilaian_edit' penilaian.id %}"
                                                     class="btn btn-warning btn-icon-split mb-1 ">
                                                     <span class="icon text-white-25">
                                                         <i class="fas fa-edit"></i>
                                                     </span>
                                                 </a>
 
-                                                <a href="{% url 'dsb_delete_kos' data.id %}"
+                                                <a href="{% url 'dsb_penilaian_delete' penilaian.id %}"
                                                     class="btn btn-danger btn-icon-split mb-1"
                                                     onclick="return confirm('yakin ingin menghapus data?')">
                                                     <span class="icon text-white-25">
@@ -183,35 +171,67 @@
                                                     </span>
                                                 </a>
                                             </td>
-
                                         </tr>
-                                        {%endfor%}
+                                        {% endfor %}
+                                        <tr class="text-center font-weight-bold">
+                                            <td colspan="2" class="bg-primary text-white">NILAI MAX</td>
+                                            <td>{{ max_values.kriteria1 }}</td>
+                                            <td>{{ max_values.kriteria2 }}</td>
+                                            <td>{{ max_values.kriteria3 }}</td>
+                                            <td>{{ max_values.kriteria4 }}</td>
+                                            <td>{{ max_values.kriteria5 }}</td>
+                                        </tr>
+                                        <tr class="text-center font-weight-bold">
+                                            <td colspan="2" class="bg-warning">NILAI MIN</td>
+                                            <td>{{ min_values.kriteria1 }}</td>
+                                            <td>{{ min_values.kriteria2 }}</td>
+                                            <td>{{ min_values.kriteria3 }}</td>
+                                            <td>{{ min_values.kriteria4 }}</td>
+                                            <td>{{ min_values.kriteria5 }}</td>
+                                        </tr>
                                     </tbody>
                                 </table>
-                                <!-- Pagination -->
-                                <!-- <div class="d-flex justify-content-center">
-                                        <ul class="pagination">
-                                            {% if datas.has_previous %}
-                                                <li class="page-item"><a class="page-link" href="?cari={{ request.GET.cari|default_if_none:'' }}&page={{ datas.previous_page_number }}">Previous</a></li>
-                                            {% else %}
-                                                <li class="page-item disabled"><span class="page-link">Previous</span></li>
-                                            {% endif %}
-                                    
-                                            {% for num in datas.paginator.page_range %}
-                                                {% if datas.number == num %}
-                                                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
-                                                {% else %}
-                                                    <li class="page-item"><a class="page-link" href="?cari={{ request.GET.cari|default_if_none:'' }}&page={{ num }}">{{ num }}</a></li>
-                                                {% endif %}
-                                            {% endfor %}
-                                    
-                                            {% if datas.has_next %}
-                                                <li class="page-item"><a class="page-link" href="?cari={{ request.GET.cari|default_if_none:'' }}&page={{ datas.next_page_number }}">Next</a></li>
-                                            {% else %}
-                                                <li class="page-item disabled"><span class="page-link">Next</span></li>
-                                            {% endif %}
-                                        </ul>
-                                    </div> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card shadow mb-5">
+                        <!-- Card Header - Dropdown -->
+                        <div class="card shadow">
+                            <div class="card-header pb-3 d-flex justify-content-between align-items-center">
+                                <h6 class="m-0 font-weight-bold text-primary">Data NORMALISASI</h6>
+                                <!-- <a href="{% url 'dsb_penilaian_add' %}"
+                                    class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                        class="fas fa-plus fa-sm text-white-50"></i> Add Penilaian
+                                </a> -->
+                            </div>
+                            <div class="card-body table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th>NO</th>
+                                            <th>ALTERNATIF</th>
+                                            <th>KRITERIA1</th>
+                                            <th>KRITERIA2</th>
+                                            <th>KRITERIA3</th>
+                                            <th>KRITERIA4</th>
+                                            <th>KRITERIA5</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for data in normalisasi_data %}
+                                        <tr class="text-center">
+                                            <td>{{ forloop.counter }}</td>
+                                            <td class="text-left">{{ data.alternatif }}</td>
+                                            <td>{{ data.kriteria1|floatformat:2 }}</td>
+                                            <td>{{ data.kriteria2|floatformat:2 }}</td>
+                                            <td>{{ data.kriteria3|floatformat:2 }}</td>
+                                            <td>{{ data.kriteria4|floatformat:2 }}</td>
+                                            <td>{{ data.kriteria5|floatformat:2 }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

@@ -24,11 +24,21 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    path('dashboard/penilaian/',views.dashboard_rekomendasi,name='dsb_penilaian'),
+    path('dashboard/penilaian/add',views.dashboard_rekomendasi_add,name='dsb_penilaian_add'),
+    path('dashboard/penilaian/update/<int:id>/',views.dashboard_rekomendasi_edit,name='dsb_penilaian_edit'),
+    path('dashboard/penilaian/update/<int:id>/',views.dashboard_rekomendasi_delete,name='dsb_penilaian_delete'),
     # dashboard
     path('dashboard/kriteria/',views.dashboard_kriteria,name='dsb_kriteria'),
     path('dashboard/kriteria/add/',views.dashboard_kriteria_add,name='dsb_add_kriteria'),
     path('dashboard/kriteria/update/<int:id>/',views.dashboard_kriteria_edit,name='dsb_edit_kriteria'),
     path('dashboard/kriteria/delete/<int:id>/',views.dashboard_kriteria_delete,name='dsb_delete_kriteria'),
+   
+    path('dashboard/subkriteria/<int:id>/',views.dashboard_subkriteria,name='dsb_subkriteria'),
+    path('dashboard/subkriteria/add/',views.dashboard_subkriteria_add,name='dsb_add_subkriteria'),
+    path('dashboard/subkriteria/update/<int:id>/',views.dashboard_subkriteria_edit,name='dsb_edit_subkriteria'),
+    path('dashboard/subkriteria/delete/<int:id>/',views.dashboard_subkriteria_delete,name='dsb_delete_subkriteria'),
 
     path('dashboard/',views.dashboard,name='dashboard'),
     path('dashboard/kos/',views.dashboard_kos,name='dsb_kos'),
@@ -40,7 +50,6 @@ urlpatterns = [
 
     # home
     path('',views.index,name='index'),
-    path('about/',views.about,name='about'),
     path('status/',views.status,name='status'),
     path('detail/<int:id>/',views.detail,name='detail'),
     path('buat_pesanan/<int:id>/',views.buat_pesanan,name='buat_pesanan'),

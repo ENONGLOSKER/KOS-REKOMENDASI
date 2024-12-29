@@ -27,27 +27,15 @@ class Kriteria(models.Model):
     def __str__(self):
         return self.nama
 
-# Model untuk relasi Kos dengan Nilai Kriteria
-class KosKriteria(models.Model):
-    kos = models.ForeignKey(Kos, on_delete=models.CASCADE)
-    kriteria = models.ForeignKey(Kriteria, on_delete=models.CASCADE)
-    nilai = models.DecimalField(max_digits=10, decimal_places=2)  # Nilai dari kriteria untuk kos ini
+class SubKriteria(models.Model):
+    kriteria = models.ForeignKey(Kriteria, on_delete=models.CASCADE, related_name="subkriteria")
+    nama = models.CharField(max_length=255)
+    nilai = models.DecimalField(max_digits=5, decimal_places=2)  # Nilai subkriteria (untuk skoring jika diperlukan)
 
     def __str__(self):
-        return f"{self.kos.nama} - {self.kriteria.nama}"
-
-# Model untuk menyimpan hasil rekomendasi SPK
-class Rekomendasi(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    kos = models.ForeignKey(Kos, on_delete=models.CASCADE)
-    skor_wsm = models.DecimalField(max_digits=10, decimal_places=5)  # Skor WSM
-    skor_wpm = models.DecimalField(max_digits=10, decimal_places=5)  # Skor WPM
-    skor_waspas = models.DecimalField(max_digits=10, decimal_places=5)  # Skor WASPAS
-    tanggal_rekomendasi = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.user.username} - {self.kos.nama} (WASPAS Skor: {self.skor_waspas})"
-
+        return f"{self.nilai}"
+ 
+    
 # Model untuk memesan kos
 class Pesanan(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -63,3 +51,11 @@ class Pesanan(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.kos.nama} ({self.status})"
+
+class Penilaian(models.Model):
+    kos = models.ForeignKey(Kos, on_delete=models.CASCADE)
+    kriteria1 = models.ForeignKey(SubKriteria, related_name='kriteria1', on_delete=models.CASCADE)
+    kriteria2 = models.ForeignKey(SubKriteria, related_name='kriteria2', on_delete=models.CASCADE)
+    kriteria3 = models.ForeignKey(SubKriteria, related_name='kriteria3', on_delete=models.CASCADE)
+    kriteria4 = models.ForeignKey(SubKriteria, related_name='kriteria4', on_delete=models.CASCADE)
+    kriteria5 = models.ForeignKey(SubKriteria, related_name='kriteria5', on_delete=models.CASCADE)

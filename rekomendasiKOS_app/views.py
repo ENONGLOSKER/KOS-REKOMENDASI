@@ -5,12 +5,104 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.db.models import Max, Min
 # app
-from .models import Kos, Pesanan, Kriteria
-from .forms import PesananForm, KosForm, KriteriaForm
-
+from .models import Kos, Pesanan, Kriteria, SubKriteria, Penilaian
+from .forms import PesananForm, KosForm, KriteriaForm, SubKriteriaForm, PenilaianForm
 # Create your views here.
 # dashboad ---------------------------------------------------------
+
+from django.db.models import Max, Min
+
+def dashboard_rekomendasi(request):
+    # Mengambil semua data penilaian
+    data_penilaian = Penilaian.objects.all()
+
+    # Menghitung nilai maksimal dan minimal untuk setiap kriteria
+    max_values = {
+        'kriteria1': Penilaian.objects.aggregate(Max('kriteria1__nilai'))['kriteria1__nilai__max'],
+        'kriteria2': Penilaian.objects.aggregate(Max('kriteria2__nilai'))['kriteria2__nilai__max'],
+        'kriteria3': Penilaian.objects.aggregate(Max('kriteria3__nilai'))['kriteria3__nilai__max'],
+        'kriteria4': Penilaian.objects.aggregate(Max('kriteria4__nilai'))['kriteria4__nilai__max'],
+        'kriteria5': Penilaian.objects.aggregate(Max('kriteria5__nilai'))['kriteria5__nilai__max'],
+    }
+
+    min_values = {
+        'kriteria1': Penilaian.objects.aggregate(Min('kriteria1__nilai'))['kriteria1__nilai__min'],
+        'kriteria2': Penilaian.objects.aggregate(Min('kriteria2__nilai'))['kriteria2__nilai__min'],
+        'kriteria3': Penilaian.objects.aggregate(Min('kriteria3__nilai'))['kriteria3__nilai__min'],
+        'kriteria4': Penilaian.objects.aggregate(Min('kriteria4__nilai'))['kriteria4__nilai__min'],
+        'kriteria5': Penilaian.objects.aggregate(Min('kriteria5__nilai'))['kriteria5__nilai__min'],
+    }
+
+    # Definisikan tipe kriteria (benefit atau cost)
+    kriteria_types = {
+        'kriteria1': 'benefit',
+        'kriteria2': 'benefit',
+        'kriteria3': 'benefit',
+        'kriteria4': 'cost',
+        'kriteria5': 'benefit',
+    }
+
+    # Normalisasi data
+    normalisasi_data = []
+    for penilaian in data_penilaian:
+        normalized = {
+            'alternatif': penilaian.kos.nama,
+        }
+        for kriteria, tipe in kriteria_types.items():
+            nilai = getattr(penilaian, kriteria).nilai
+            if tipe == 'benefit':
+                normalized[kriteria] = nilai / (max_values[kriteria] or 1)
+            elif tipe == 'cost':
+                normalized[kriteria] = (min_values[kriteria] or 1) / (nilai or 1)
+        normalisasi_data.append(normalized)
+
+    # Mengirim context ke template
+    context = {
+        'data_penilaian': data_penilaian,
+        'max_values': max_values,
+        'min_values': min_values,
+        'normalisasi_data': normalisasi_data,
+    }
+    return render(request, 'dashboard_penilaian.html', context)
+
+
+def dashboard_rekomendasi_add(request):
+    if request.method == 'POST':
+        form = PenilaianForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('dsb_penilaian')
+    else:
+        form = PenilaianForm()    
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'dashboard_form.html', context)
+
+def dashboard_rekomendasi_edit(request, id):
+    data_penilaian = get_object_or_404(Penilaian, id=id)
+    if request.method == 'POST':
+        form = PenilaianForm(request.POST, instance=data_penilaian)
+        if form.is_valid():
+            form.save()
+            return redirect('dsb_penilaian')
+    else:
+        form = PenilaianForm(instance=data_penilaian)    
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'dashboard_form.html', context)
+
+def dashboard_rekomendasi_delete(request, id):
+    data_penilaian = get_object_or_404(Penilaian, id=id)
+    data_penilaian.delete()
+    return redirect('dsb_penilaian')
+    
+@login_required
 def dashboard_kriteria(request):
     data_kriteria = Kriteria.objects.all()
     context = {
@@ -44,11 +136,54 @@ def dashboard_kriteria_edit(request, id):
     }
 
     return render(request, 'dashboard_form.html', context)
-
 def dashboard_kriteria_delete(request, id):
     data_kriteria = get_object_or_404(Kriteria, id=id)
     data_kriteria.delete()
     return redirect('dsb_kriteria')
+
+def dashboard_subkriteria(request, id):
+    data_kriteria = get_object_or_404(Kriteria, id=id)
+    data_subkriteria = data_kriteria.subkriteria.all()
+
+    context = {
+        'data_kriteria': data_kriteria,
+        'data_subkriteria': data_subkriteria,
+    }
+    return render(request, 'dashboard_subkriteria.html', context)
+def dashboard_subkriteria_add(request):
+    if request.method == 'POST':
+        form = SubKriteriaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            sub_kriteria=form.instance
+            return redirect('dsb_subkriteria', id=sub_kriteria.kriteria.id)
+    else:
+        form = SubKriteriaForm()    
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'dashboard_form.html', context)
+def dashboard_subkriteria_edit(request,id):
+    data_kriteria = get_object_or_404(SubKriteria, id=id)
+    if request.method == 'POST':
+        form = SubKriteriaForm(request.POST, instance=data_kriteria)
+        if form.is_valid():
+            form.save()
+            sub_kriteria=form.instance
+            return redirect('dsb_subkriteria', id=sub_kriteria.kriteria.id)
+    else:
+        form = SubKriteriaForm(instance=data_kriteria)    
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'dashboard_form.html', context)
+def dashboard_subkriteria_delete(request, id):
+    data_kriteria = get_object_or_404(SubKriteria, id=id)
+    data_subkriteria = data_kriteria.kriteria.id
+    data_kriteria.delete()
+    return redirect('dsb_subkriteria', id=data_subkriteria)
 
 @login_required
 def dashboard(request):
@@ -73,7 +208,6 @@ def dashboard_kos_add(request):
     }
 
     return render(request, 'dashboard_form.html', context)
-
 def dashboard_kos_edit(request, id):
     data_kos = get_object_or_404(Kos, id=id)
     if request.method == 'POST':
@@ -88,12 +222,11 @@ def dashboard_kos_edit(request, id):
     }
 
     return render(request, 'dashboard_form.html', context)
-
 def dashboard_kos_delete(request, id):
     data_kos = get_object_or_404(Kos, id=id)
     data_kos.delete()
     return redirect('dsb_kos')
-
+@login_required
 def dashboard_pesanan(request):
     data_pesanan = Pesanan.objects.all()
     context = {
@@ -101,7 +234,7 @@ def dashboard_pesanan(request):
     }
 
     return render(request, 'dashboard_pesanan.html', context)
-
+@login_required
 def status_update(request, id):
     data_pesanan = get_object_or_404(Pesanan, id=id)
     if request.method == 'POST':
@@ -149,7 +282,6 @@ def detail(request, id):
         'data_kos': data_kos,
     }                              
     return render(request, 'detail.html', context)
-
 @login_required
 def buat_pesanan(request, id):
     # Ambil data kos berdasarkan ID
@@ -190,8 +322,6 @@ def buat_pesanan(request, id):
         'form': form,
     }
     return render(request, 'form_sewa.html', context)
-
-
 def batal_pesanan(request, id):
     pesanan = get_object_or_404(Pesanan, id=id)
 
@@ -204,9 +334,8 @@ def batal_pesanan(request, id):
         else:
             messages.error(request, "Maaf, pesanan ini tidak dapat dibatalkan karena statusnya telah dikonfirmasi.")
             return redirect('status')
-    
-def about(request):
-    return render(request, 'about.html')
+
+# auth  
 def signin_user(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -237,7 +366,6 @@ def signup_user(request):
             messages.error(request, 'password tidak sama')
        
     return render(request, 'signup.html')
-
 def signout_user(request):
     logout(request)
     return redirect('signin')

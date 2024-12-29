@@ -11,7 +11,7 @@
         </button>
 
         <div class="">
-            <h1 class="h3 mb-0 text-gray-800 font-weight-bold">Dashboard</h1>
+            <h1 class="h3 mb-0 text-gray-800 font-weight-bold">Sub Kriteria</h1>
         </div>
 
         <!-- sweet alert -->
@@ -125,10 +125,12 @@
                         <!-- Card Header - Dropdown -->
                         <div class="card shadow">
                             <div class="card-header pb-3 d-flex justify-content-between align-items-center">
-                                <h6 class="m-0 font-weight-bold text-primary">Data KOS</h6>
-                                <a href="{% url 'dsb_add_kos' %}"
+                                <h6 class="m-0 font-weight-bold text-primary">Data Sub Kriteria
+                                    {{data_kriteria.nama}}</h6>
+                                <a href="{% url 'dsb_add_subkriteria' %}"
                                     class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                        class="fas fa-plus fa-sm text-white-50"></i> Add KOS
+                                        class="fas fa-plus fa-sm text-white-50"></i> Add Sub Kriteria
+
                                 </a>
                             </div>
                             <div class="card-body table-responsive">
@@ -136,46 +138,27 @@
                                     <thead class="text-center align-middle">
                                         <tr>
                                             <th class="align-middle">NO</th>
-                                            <th class="align-middle">FOTO</th>
-                                            <th class="align-middle">ALAMAT</th>
-                                            <th class="align-middle">HARGA</th>
-                                            <th class="align-middle">JARAK KE KAMPUS</th>
-                                            <th class="align-middle">FASILITAS</th>
-                                            <th class="align-middle">LUAS KAMAR</th>
-                                            <th class="align-middle">DESKRIPSI</th>
-                                            <th class="align-middle">JLH KAMAR</th>
+                                            <th class="align-middle">KETERANGAN</th>
+                                            <th class="align-middle">NILAI</th>
                                             <th class="align-middle">ACTION</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
-                                        {%for data in data_kos%}
+                                        {%for data in data_subkriteria%}
                                         <tr style="text-transform: capitalize;">
                                             <td class="text-center">{{forloop.counter}}</td>
-                                            <td class="text-center d-flex flex-column align-items-center">
-                                                <p class="font-weight-bold">{{data.nama}}</p>
-                                                <span class="badge bg-primary text-white"
-                                                    style="padding: 4px 10px; width: fit-content; margin-bottom: 10px;">Khusus
-                                                    {{data.jenis}}</span>
-                                                <img src="{{data.foto.url}}" alt="{{data.nama}}">
-                                            </td>
-                                            <td class="text-center">{{data.alamat}}</td>
-                                            <td class="text-center">{{data.harga}}</td>
-                                            <td class="text-center">{{data.jarak_ke_kampus}}</td>
-                                            <td class="text-center">{{data.fasilitas}}</td>
-                                            <td class="text-center">{{data.luas_kamar}}</td>
-                                            <td>{{data.deskripsi | truncatewords:10}}</td>
-                                            <td class="text-center">{{data.Jumlah_Kamar}}</td>
-
+                                            <td class="text-center">{{data.nama}}</td>
+                                            <td class="text-center">{{data.nilai}}</td>
                                             <td class="text-center">
-                                                <a href="{% url 'dsb_edit_kos' data.id %}"
+                                                <a href="{% url 'dsb_edit_subkriteria' data.id %}"
                                                     class="btn btn-warning btn-icon-split mb-1 ">
                                                     <span class="icon text-white-25">
                                                         <i class="fas fa-edit"></i>
                                                     </span>
                                                 </a>
 
-                                                <a href="{% url 'dsb_delete_kos' data.id %}"
+                                                <a href="{% url 'dsb_delete_subkriteria' data.id %}"
                                                     class="btn btn-danger btn-icon-split mb-1"
                                                     onclick="return confirm('yakin ingin menghapus data?')">
                                                     <span class="icon text-white-25">

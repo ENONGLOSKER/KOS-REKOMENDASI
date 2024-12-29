@@ -11,16 +11,6 @@ class KriteriaAdmin(admin.ModelAdmin):
 
 admin.site.register(Kriteria, KriteriaAdmin)
 
-class KosKriteriaAdmin(admin.ModelAdmin):
-    list_display = ('kos', 'kriteria', 'nilai')
-
-admin.site.register(KosKriteria, KosKriteriaAdmin)
-
-class RekomendasiAdmin(admin.ModelAdmin):
-    list_display = ('user', 'kos', 'skor_wsm', 'skor_wpm', 'skor_waspas', 'tanggal_rekomendasi')
-
-admin.site.register(Rekomendasi, RekomendasiAdmin)
-
 class PesananAdmin(admin.ModelAdmin):
     list_display = ('user', 'kos', 'tanggal_pesan', 'tanggal_mulai', 'tanggal_akhir', 'status')
 
